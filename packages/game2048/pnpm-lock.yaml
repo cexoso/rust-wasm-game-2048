@@ -1,0 +1,293 @@
+lockfileVersion: 5.4
+
+specifiers:
+  typescript: ^4.6.4
+  vite: ^3.0.0
+
+devDependencies:
+  typescript: 4.8.4
+  vite: 3.1.7
+
+packages:
+
+  /@esbuild/android-arm/0.15.10:
+    resolution: {integrity: sha1-pflDLrIhr8JDwyEFjvJf6JmIaJI=, tarball: '@esbuild/android-arm/download/@esbuild/android-arm-0.15.10.tgz'}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /@esbuild/linux-loong64/0.15.10:
+    resolution: {integrity: sha1-eKQol8LPjbn9XxgR91kDk7d3dMc=, tarball: '@esbuild/linux-loong64/download/@esbuild/linux-loong64-0.15.10.tgz'}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-android-64/0.15.10:
+    resolution: {integrity: sha1-ilmoSsvy7KlplsrcNWQs8FXElPA=, tarball: esbuild-android-64/download/esbuild-android-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-android-arm64/0.15.10:
+    resolution: {integrity: sha1-9FOFHcHYxUCaOM92E6M4Uvr0kV0=, tarball: esbuild-android-arm64/download/esbuild-android-arm64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-darwin-64/0.15.10:
+    resolution: {integrity: sha1-d4vSnIGG/0exdsivWMCM8PuOa4Y=, tarball: esbuild-darwin-64/download/esbuild-darwin-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-darwin-arm64/0.15.10:
+    resolution: {integrity: sha1-swu++0bcPF1HCLBDXlL2RWV41t8=, tarball: esbuild-darwin-arm64/download/esbuild-darwin-arm64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-freebsd-64/0.15.10:
+    resolution: {integrity: sha1-qzAcX23tURDb3WERQL7xp8LpkjY=, tarball: esbuild-freebsd-64/download/esbuild-freebsd-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-freebsd-arm64/0.15.10:
+    resolution: {integrity: sha1-pbCbhnpv9JEQ9SNDtvEiZdtj1D8=, tarball: esbuild-freebsd-arm64/download/esbuild-freebsd-arm64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-32/0.15.10:
+    resolution: {integrity: sha1-UoL+mRVkHK+cgHDkuiw+FtNY+Dc=, tarball: esbuild-linux-32/download/esbuild-linux-32-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-64/0.15.10:
+    resolution: {integrity: sha1-83JuhaABSVgMsZ+Kv6vLuW9dUrs=, tarball: esbuild-linux-64/download/esbuild-linux-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-arm/0.15.10:
+    resolution: {integrity: sha1-QKknDaPI/6Ms9y4kp5iD4yPf8I0=, tarball: esbuild-linux-arm/download/esbuild-linux-arm-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-arm64/0.15.10:
+    resolution: {integrity: sha1-LwBW6dUobtsBhbVmVcqoxXTY2+c=, tarball: esbuild-linux-arm64/download/esbuild-linux-arm64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-mips64le/0.15.10:
+    resolution: {integrity: sha1-kM4cTuAgLttKxpgH3qd/flgEq8Q=, tarball: esbuild-linux-mips64le/download/esbuild-linux-mips64le-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-ppc64le/0.15.10:
+    resolution: {integrity: sha1-eCg3rnvVsnkXgQbJ3YAXVaIfq98=, tarball: esbuild-linux-ppc64le/download/esbuild-linux-ppc64le-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-riscv64/0.15.10:
+    resolution: {integrity: sha1-10INgG7OUXTyT0Y0MDFG+RWrQgc=, tarball: esbuild-linux-riscv64/download/esbuild-linux-riscv64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-linux-s390x/0.15.10:
+    resolution: {integrity: sha1-If3wyzSUp/tSCnGTTk3/zmf+R74=, tarball: esbuild-linux-s390x/download/esbuild-linux-s390x-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-netbsd-64/0.15.10:
+    resolution: {integrity: sha1-bAazEH499T3jgeYpkYTUWX2wRA8=, tarball: esbuild-netbsd-64/download/esbuild-netbsd-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-openbsd-64/0.15.10:
+    resolution: {integrity: sha1-Ta719djnS72lO2UWAClEXVglcM8=, tarball: esbuild-openbsd-64/download/esbuild-openbsd-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-sunos-64/0.15.10:
+    resolution: {integrity: sha1-X+e+8megLzIv0kmoIU0CdJNziKc=, tarball: esbuild-sunos-64/download/esbuild-sunos-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-windows-32/0.15.10:
+    resolution: {integrity: sha1-SOPd4lqwE1V5ooizCrbd720fCyg=, tarball: esbuild-windows-32/download/esbuild-windows-32-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-windows-64/0.15.10:
+    resolution: {integrity: sha1-OHqVFb7z/uUC0nel0KLbSaTs2gU=, tarball: esbuild-windows-64/download/esbuild-windows-64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild-windows-arm64/0.15.10:
+    resolution: {integrity: sha1-Wm/PL6SeiVlJv1SVzwiKsbQ66Hk=, tarball: esbuild-windows-arm64/download/esbuild-windows-arm64-0.15.10.tgz}
+    engines: {node: '>=12'}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /esbuild/0.15.10:
+    resolution: {integrity: sha1-hcL4RG6bH+BPrmjazqy6Az7tvUI=, tarball: esbuild/download/esbuild-0.15.10.tgz}
+    engines: {node: '>=12'}
+    hasBin: true
+    requiresBuild: true
+    optionalDependencies:
+      '@esbuild/android-arm': 0.15.10
+      '@esbuild/linux-loong64': 0.15.10
+      esbuild-android-64: 0.15.10
+      esbuild-android-arm64: 0.15.10
+      esbuild-darwin-64: 0.15.10
+      esbuild-darwin-arm64: 0.15.10
+      esbuild-freebsd-64: 0.15.10
+      esbuild-freebsd-arm64: 0.15.10
+      esbuild-linux-32: 0.15.10
+      esbuild-linux-64: 0.15.10
+      esbuild-linux-arm: 0.15.10
+      esbuild-linux-arm64: 0.15.10
+      esbuild-linux-mips64le: 0.15.10
+      esbuild-linux-ppc64le: 0.15.10
+      esbuild-linux-riscv64: 0.15.10
+      esbuild-linux-s390x: 0.15.10
+      esbuild-netbsd-64: 0.15.10
+      esbuild-openbsd-64: 0.15.10
+      esbuild-sunos-64: 0.15.10
+      esbuild-windows-32: 0.15.10
+      esbuild-windows-64: 0.15.10
+      esbuild-windows-arm64: 0.15.10
+    dev: true
+
+  /fsevents/2.3.2:
+    resolution: {integrity: sha1-ilJveLj99GI7cJ4Ll1xSwkwC/Ro=, tarball: fsevents/download/fsevents-2.3.2.tgz}
+    engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
+    requiresBuild: true
+    dev: true
+    optional: true
+
+  /function-bind/1.1.1:
+    resolution: {integrity: sha1-pWiZ0+o8m6uHS7l3O3xe3pL0iV0=, tarball: function-bind/download/function-bind-1.1.1.tgz}
+    dev: true
+
+  /has/1.0.3:
+    resolution: {integrity: sha1-ci18v8H2qoJB8W3YFOAR4fQeh5Y=, tarball: has/download/has-1.0.3.tgz}
+    engines: {node: '>= 0.4.0'}
+    dependencies:
+      function-bind: 1.1.1
+    dev: true
+
+  /is-core-module/2.10.0:
+    resolution: {integrity: sha1-kBLt4KkcaVh+ZHUU4dUncBnnKO0=, tarball: is-core-module/download/is-core-module-2.10.0.tgz}
+    dependencies:
+      has: 1.0.3
+    dev: true
+
+  /nanoid/3.3.4:
+    resolution: {integrity: sha1-cwtn480J4t6s8DwCfIHJ2dvF6Ks=, tarball: nanoid/download/nanoid-3.3.4.tgz}
+    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
+    hasBin: true
+    dev: true
+
+  /path-parse/1.0.7:
+    resolution: {integrity: sha1-+8EUtgykKzDZ2vWFjkvWi77bZzU=, tarball: path-parse/download/path-parse-1.0.7.tgz}
+    dev: true
+
+  /picocolors/1.0.0:
+    resolution: {integrity: sha1-y1vcdP8/UYkiNur3nWi8RFZKuBw=, tarball: picocolors/download/picocolors-1.0.0.tgz}
+    dev: true
+
+  /postcss/8.4.17:
+    resolution: {integrity: sha1-+Hhj7HzTU/gferLexdZ9hhu7G+U=, tarball: postcss/download/postcss-8.4.17.tgz}
+    engines: {node: ^10 || ^12 || >=14}
+    dependencies:
+      nanoid: 3.3.4
+      picocolors: 1.0.0
+      source-map-js: 1.0.2
+    dev: true
+
+  /resolve/1.22.1:
+    resolution: {integrity: sha1-J8suu1P5GrtJRwqSi7p1WAZqwXc=, tarball: resolve/download/resolve-1.22.1.tgz}
+    hasBin: true
+    dependencies:
+      is-core-module: 2.10.0
+      path-parse: 1.0.7
+      supports-preserve-symlinks-flag: 1.0.0
+    dev: true
+
+  /rollup/2.78.1:
+    resolution: {integrity: sha1-Uv45NNnIPLT3xMtft12IWRvoZI8=, tarball: rollup/download/rollup-2.78.1.tgz}
+    engines: {node: '>=10.0.0'}
+    hasBin: true
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
+
+  /source-map-js/1.0.2:
+    resolution: {integrity: sha1-rbw2HZxi3zgBJefxYfccgm8eSQw=, tarball: source-map-js/download/source-map-js-1.0.2.tgz}
+    engines: {node: '>=0.10.0'}
+    dev: true
+
+  /supports-preserve-symlinks-flag/1.0.0:
+    resolution: {integrity: sha1-btpL00SjyUrqN21MwxvHcxEDngk=, tarball: supports-preserve-symlinks-flag/download/supports-preserve-symlinks-flag-1.0.0.tgz}
+    engines: {node: '>= 0.4'}
+    dev: true
+
+  /typescript/4.8.4:
+    resolution: {integrity: sha1-xGSryhWWaVl75flriUNQCyOOYOY=, tarball: typescript/download/typescript-4.8.4.tgz}
+    engines: {node: '>=4.2.0'}
+    hasBin: true
+    dev: true
+
+  /vite/3.1.7:
+    resolution: {integrity: sha1-n8K1ejlfeRddOPo8/9FQgLDZy/w=, tarball: vite/download/vite-3.1.7.tgz}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    hasBin: true
+    peerDependencies:
+      less: '*'
+      sass: '*'
+      stylus: '*'
+      terser: ^5.4.0
+    dependencies:
+      esbuild: 0.15.10
+      postcss: 8.4.17
+      resolve: 1.22.1
+      rollup: 2.78.1
+    optionalDependencies:
+      fsevents: 2.3.2
+    dev: true
