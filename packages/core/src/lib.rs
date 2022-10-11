@@ -5,7 +5,7 @@ extern crate wasm_bindgen;
 use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
-mod mine_clean;
+mod game2048;
 
 #[wasm_bindgen]
 extern "C" {
@@ -55,16 +55,6 @@ impl Adder {
     pub fn add(&mut self, n: i32) -> i32 {
         self.sum += n;
         self.sum
-    }
-    pub fn add_element(&self) {
-        let window = web_sys::window().unwrap();
-        let document = window.document().unwrap();
-        let div_element = document.create_element("div").unwrap();
-        div_element.set_inner_html(&format!("hello world, {}", self.sum)[..]);
-        let body = document.body().unwrap();
-        body.append_child(&web_sys::Node::from(div_element))
-            .unwrap();
-        info!("log from rust {}", self.sum);
     }
     pub fn big_sum(&self) -> i32 {
         let mut i = 0;
