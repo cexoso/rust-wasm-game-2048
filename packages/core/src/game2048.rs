@@ -19,8 +19,13 @@ impl Game {
         }
     }
     pub fn init(&mut self) {
-        self.checkerboard[1][2] = 4;
+        self.checkerboard = [[0; 4]; 4];
+        let count = self.rand.get_rand_value();
+        for _ in 0..count {
+            self.generate_one_cube();
+        }
     }
+
     pub fn get_checkerboard(&self) -> String {
         match serde_json::to_string(&self.checkerboard) {
             Ok(str) => str,
@@ -65,7 +70,6 @@ impl Game {
             );
             let value = self.rand.get_rand_value();
             self.checkerboard[x][j] = value;
-            println!("debugger 🐛  {:?}", self.checkerboard);
             return true;
         }
         false
@@ -82,10 +86,13 @@ mod test {
             game.get_checkerboard(),
             "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
         );
+        // 第一个值表示初始化时随机生成多少次
+        game.rand.set_next_value(vec![2, 2, 4]);
+        game.rand.set_next_position(vec![1, 1]);
         game.init();
         assert_eq!(
             game.get_checkerboard(),
-            "[[0,0,0,0],[0,0,4,0],[0,0,0,0],[0,0,0,0]]"
+            "[[2,4,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
         );
     }
     #[test]
