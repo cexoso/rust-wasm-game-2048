@@ -8,22 +8,27 @@ pub struct Game {
     checkerboard: [[u32; 4]; 4],
     #[serde(skip)]
     rand: RandUtil,
+    #[serde(skip)]
+    watch_list: Vec<js_sys::Function>,
 }
 
 #[wasm_bindgen]
 impl Game {
+    #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self {
             checkerboard: [[0; 4]; 4],
             rand: RandUtil::new(),
+            watch_list: Vec::new(),
         }
     }
     pub fn init(&mut self) {
         self.checkerboard = [[0; 4]; 4];
-        let count = self.rand.get_rand_value();
+        let count = self.rand.get_rand_value(Some(2));
         for _ in 0..count {
             self.generate_one_cube();
         }
+        self.notify_all();
     }
 
     pub fn get_checkerboard(&self) -> String {
@@ -68,12 +73,32 @@ impl Game {
                 self.checkerboard,
                 self.rand.get_rand_position(Some(remain_size)),
             );
-            let value = self.rand.get_rand_value();
+            let value = self.rand.get_rand_value(None);
             self.checkerboard[x][j] = value;
             return true;
         }
         false
     }
+
+    pub fn subscript(&mut self, f: js_sys::Function) -> usize {
+        self.watch_list.push(f);
+        self.watch_list.len()
+    }
+
+    pub fn notify_all(&self) {
+        let len = self.watch_list.len();
+        if len == 0 {
+            return;
+        }
+        let str = JsValue::from_str(serde_json::to_string(&self.checkerboard).unwrap().as_str());
+        for index in 0..len {
+            let f = &self.watch_list[index];
+            let this = JsValue::NULL;
+            f.call1(&this, &str).unwrap();
+        }
+    }
+
+    // pub fn unsubscript(&self, f: js_sys::Function) {}
 }
 
 #[cfg(test)]

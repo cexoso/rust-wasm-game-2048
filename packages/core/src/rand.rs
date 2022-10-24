@@ -31,13 +31,17 @@ impl RandUtil {
         })
     }
 
-    pub fn get_rand_value(&mut self) -> u32 {
+    pub fn get_rand_value(&mut self, max_value: Option<usize>) -> u32 {
         let len = self.cheating_value_list.len();
         if len != 0 {
             return self.cheating_value_list.remove(0);
         }
+        let max_value = match max_value {
+            Some(n) => n,
+            None => 4,
+        };
         let result = [2, 4, 8, 16];
-        let y: usize = self.rng.gen_range(0..4);
+        let y: usize = self.rng.gen_range(0..max_value);
         result[y]
     }
 }
@@ -70,9 +74,9 @@ mod test {
     fn cheating_list() {
         let mut rand = RandUtil::new();
         rand.set_next_value(vec![1, 2, 3]);
-        assert_eq!(rand.get_rand_value(), 1);
-        assert_eq!(rand.get_rand_value(), 2);
-        assert_eq!(rand.get_rand_value(), 3);
+        assert_eq!(rand.get_rand_value(None), 1);
+        assert_eq!(rand.get_rand_value(None), 2);
+        assert_eq!(rand.get_rand_value(None), 3);
     }
 
     #[test]
