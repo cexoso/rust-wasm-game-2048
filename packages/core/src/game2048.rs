@@ -1,3 +1,4 @@
+use crate::rand::RandUtil;
 use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
@@ -5,6 +6,8 @@ use wasm_bindgen::prelude::*;
 #[derive(Serialize, Debug)]
 pub struct Game {
     checkerboard: [[u64; 4]; 4],
+    #[serde(skip)]
+    rand: RandUtil,
 }
 
 #[wasm_bindgen]
@@ -12,6 +15,7 @@ impl Game {
     pub fn new() -> Self {
         Self {
             checkerboard: [[0; 4]; 4],
+            rand: RandUtil::new(),
         }
     }
     pub fn init(&mut self) {
@@ -31,7 +35,6 @@ mod test {
     use super::*;
     #[test]
     fn init() {
-        println!("hello world {}", 123);
         let mut game = Game::new();
         assert_eq!(
             game.get_checkerboard(),

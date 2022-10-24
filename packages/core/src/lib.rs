@@ -6,6 +6,7 @@ use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
 mod game2048;
+mod rand;
 
 #[wasm_bindgen]
 extern "C" {
