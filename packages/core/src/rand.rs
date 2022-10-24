@@ -25,7 +25,7 @@ impl RandUtil {
     }
 
     #[allow(dead_code)]
-    pub fn set_next_num(&mut self, ns: Vec<u32>) {
+    pub fn set_next_value(&mut self, ns: Vec<u32>) {
         ns.iter().for_each(|n| {
             self.cheating_value_list.push(*n);
         })
@@ -69,7 +69,7 @@ mod test {
     #[test]
     fn cheating_list() {
         let mut rand = RandUtil::new();
-        rand.set_next_num(vec![1, 2, 3]);
+        rand.set_next_value(vec![1, 2, 3]);
         assert_eq!(rand.get_rand_value(), 1);
         assert_eq!(rand.get_rand_value(), 2);
         assert_eq!(rand.get_rand_value(), 3);

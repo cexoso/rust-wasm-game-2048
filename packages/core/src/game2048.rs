@@ -5,7 +5,7 @@ use wasm_bindgen::prelude::*;
 #[wasm_bindgen]
 #[derive(Serialize, Debug)]
 pub struct Game {
-    checkerboard: [[u64; 4]; 4],
+    checkerboard: [[u32; 4]; 4],
     #[serde(skip)]
     rand: RandUtil,
 }
@@ -19,7 +19,6 @@ impl Game {
         }
     }
     pub fn init(&mut self) {
-        // TODO: 先不实现随机函数 随机一个棋盘
         self.checkerboard[1][2] = 4;
     }
     pub fn get_checkerboard(&self) -> String {
@@ -27,6 +26,49 @@ impl Game {
             Ok(str) => str,
             Err(_) => String::from(""),
         }
+    }
+
+    fn get_empty_position(checkerboard: [[u32; 4]; 4]) -> usize {
+        let mut size = 0;
+        for i in 0..checkerboard.len() {
+            let row = checkerboard[i];
+            for j in 0..row.len() {
+                if row[j] == 0 {
+                    size += 1
+                }
+            }
+        }
+        size
+    }
+
+    fn get_position_by_offset(checkerboard: [[u32; 4]; 4], mut offset: usize) -> (usize, usize) {
+        for i in 0..checkerboard.len() {
+            let row = checkerboard[i];
+            for j in 0..row.len() {
+                if row[j] == 0 {
+                    offset -= 1;
+                }
+                if offset == 0 {
+                    return (i, j);
+                }
+            }
+        }
+        (0, 0)
+    }
+
+    pub fn generate_one_cube(&mut self) -> bool {
+        let remain_size = Self::get_empty_position(self.checkerboard);
+        if remain_size > 0 {
+            let (x, j) = Self::get_position_by_offset(
+                self.checkerboard,
+                self.rand.get_rand_position(Some(remain_size)),
+            );
+            let value = self.rand.get_rand_value();
+            self.checkerboard[x][j] = value;
+            println!("debugger 🐛  {:?}", self.checkerboard);
+            return true;
+        }
+        false
     }
 }
 
@@ -45,5 +87,25 @@ mod test {
             game.get_checkerboard(),
             "[[0,0,0,0],[0,0,4,0],[0,0,0,0],[0,0,0,0]]"
         );
+    }
+    #[test]
+    fn generate_one_cube() {
+        let mut game = Game::new();
+        game.rand.set_next_value(vec![1]);
+        game.rand.set_next_position(vec![1]);
+        game.generate_one_cube();
+        assert_eq!(
+            game.get_checkerboard(),
+            "[[1,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+        );
+    }
+    #[test]
+    fn generate_one_full() {
+        let mut game = Game::new();
+        game.rand.set_next_value(vec![1]);
+        game.rand.set_next_position(vec![1]);
+        game.checkerboard = [[1; 4]; 4];
+        // 满了，不允许再新增
+        assert_eq!(game.generate_one_cube(), false);
     }
 }
