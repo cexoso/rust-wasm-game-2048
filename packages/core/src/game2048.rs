@@ -31,11 +31,9 @@ impl Game {
         self.notify_all();
     }
 
-    pub fn get_checkerboard(&self) -> String {
-        match serde_json::to_string(&self.checkerboard) {
-            Ok(str) => str,
-            Err(_) => String::from(""),
-        }
+    // TODO: 去掉这个用于测试的函数
+    pub fn get_checkerboard(&self) -> JsValue {
+        serde_wasm_bindgen::to_value(&self.checkerboard).unwrap()
     }
 
     fn get_empty_position(checkerboard: [[u32; 4]; 4]) -> usize {
@@ -90,11 +88,11 @@ impl Game {
         if len == 0 {
             return;
         }
-        let str = JsValue::from_str(serde_json::to_string(&self.checkerboard).unwrap().as_str());
+        let x = serde_wasm_bindgen::to_value(&self.checkerboard).unwrap();
         for index in 0..len {
             let f = &self.watch_list[index];
             let this = JsValue::NULL;
-            f.call1(&this, &str).unwrap();
+            f.call1(&this, &x).unwrap();
         }
     }
 
