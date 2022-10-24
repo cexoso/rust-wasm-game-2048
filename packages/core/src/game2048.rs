@@ -98,7 +98,17 @@ impl Game {
         }
     }
 
-    // pub fn unsubscript(&self, f: js_sys::Function) {}
+    pub fn unsubscript(&mut self, f: js_sys::Function) -> bool {
+        let watch_list = &self.watch_list;
+        for i in 0..watch_list.len() {
+            let spec_f = &watch_list[i];
+            if *spec_f == f {
+                self.watch_list.remove(i);
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 #[cfg(test)]
