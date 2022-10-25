@@ -14,15 +14,16 @@ export const useGame = () => useContext(GameContext);
 
 export const useBoard = () => {
   const game = useGame();
-  const [board, setBoard] = useState<IBoardValue>(game.get_checkerboard());
+  const [board, setBoard] = useState<IBoardValue>(
+    game.get_checkerboard_js_state()
+  );
   useEffect(() => {
     const onBoardChange = (event: IBoardValue) => {
       setBoard(event);
     };
-
-    game.subscript(onBoardChange);
+    game.subscript_board(onBoardChange);
     return () => {
-      game.unsubscript(onBoardChange);
+      game.unsubscript_board(onBoardChange);
     };
   });
   return board;

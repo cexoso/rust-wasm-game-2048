@@ -1,15 +1,11 @@
+use crate::observable::Observable;
 use crate::rand::RandUtil;
-use serde::Serialize;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
-#[derive(Serialize, Debug)]
 pub struct Game {
-    checkerboard: [[u32; 4]; 4],
-    #[serde(skip)]
+    checkerboard: Observable<[[u32; 4]; 4]>,
     rand: RandUtil,
-    #[serde(skip)]
-    watch_list: Vec<js_sys::Function>,
 }
 
 #[wasm_bindgen]
@@ -17,23 +13,17 @@ impl Game {
     #[wasm_bindgen(constructor)]
     pub fn new() -> Self {
         Self {
-            checkerboard: [[0; 4]; 4],
+            checkerboard: Observable::new([[0; 4]; 4]),
             rand: RandUtil::new(),
-            watch_list: Vec::new(),
         }
     }
     pub fn init(&mut self) {
-        self.checkerboard = [[0; 4]; 4];
+        self.checkerboard.payload = [[0; 4]; 4];
         let count = self.rand.get_rand_value(Some(2));
         for _ in 0..count {
             self.generate_one_cube();
         }
-        self.notify_all();
-    }
-
-    // TODO: 去掉这个用于测试的函数
-    pub fn get_checkerboard(&self) -> JsValue {
-        serde_wasm_bindgen::to_value(&self.checkerboard).unwrap()
+        self.checkerboard.notify_all();
     }
 
     fn get_empty_position(checkerboard: [[u32; 4]; 4]) -> usize {
@@ -65,47 +55,33 @@ impl Game {
     }
 
     pub fn generate_one_cube(&mut self) -> bool {
-        let remain_size = Self::get_empty_position(self.checkerboard);
+        let remain_size = Self::get_empty_position(self.checkerboard.payload);
         if remain_size > 0 {
             let (x, j) = Self::get_position_by_offset(
-                self.checkerboard,
+                self.checkerboard.payload,
                 self.rand.get_rand_position(Some(remain_size)),
             );
             let value = self.rand.get_rand_value(None);
-            self.checkerboard[x][j] = value;
+            self.checkerboard.payload[x][j] = value;
             return true;
         }
         false
     }
 
-    pub fn subscript(&mut self, f: js_sys::Function) -> usize {
-        self.watch_list.push(f);
-        self.watch_list.len()
+    pub fn get_checkerboard_js_state(&self) -> JsValue {
+        self.checkerboard.get_js_state()
     }
 
-    pub fn notify_all(&self) {
-        let len = self.watch_list.len();
-        if len == 0 {
-            return;
-        }
-        let x = serde_wasm_bindgen::to_value(&self.checkerboard).unwrap();
-        for index in 0..len {
-            let f = &self.watch_list[index];
-            let this = JsValue::NULL;
-            f.call1(&this, &x).unwrap();
-        }
+    pub fn get_checkerboard_state(&self) -> String {
+        self.checkerboard.get_state()
     }
 
-    pub fn unsubscript(&mut self, f: js_sys::Function) -> bool {
-        let watch_list = &self.watch_list;
-        for i in 0..watch_list.len() {
-            let spec_f = &watch_list[i];
-            if *spec_f == f {
-                self.watch_list.remove(i);
-                return true;
-            }
-        }
-        return false;
+    pub fn subscript_board(&mut self, f: js_sys::Function) -> usize {
+        self.checkerboard.subscript(f)
+    }
+
+    pub fn unsubscript_board(&mut self, f: js_sys::Function) -> bool {
+        self.checkerboard.unsubscript(f)
     }
 }
 
@@ -116,7 +92,7 @@ mod test {
     fn init() {
         let mut game = Game::new();
         assert_eq!(
-            game.get_checkerboard(),
+            game.get_checkerboard_state(),
             "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
         );
         // 第一个值表示初始化时随机生成多少次
@@ -124,7 +100,7 @@ mod test {
         game.rand.set_next_position(vec![1, 1]);
         game.init();
         assert_eq!(
-            game.get_checkerboard(),
+            game.get_checkerboard_state(),
             "[[2,4,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
         );
     }
@@ -135,7 +111,7 @@ mod test {
         game.rand.set_next_position(vec![1]);
         game.generate_one_cube();
         assert_eq!(
-            game.get_checkerboard(),
+            game.get_checkerboard_state(),
             "[[1,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
         );
     }
@@ -144,7 +120,7 @@ mod test {
         let mut game = Game::new();
         game.rand.set_next_value(vec![1]);
         game.rand.set_next_position(vec![1]);
-        game.checkerboard = [[1; 4]; 4];
+        game.checkerboard.payload = [[1; 4]; 4];
         // 满了，不允许再新增
         assert_eq!(game.generate_one_cube(), false);
     }
