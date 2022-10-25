@@ -27,18 +27,20 @@ impl Game {
                 println!("debugger 🐛 value {:?}", value);
             }
         }
-        self.checkerboard.payload = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0], [2, 0, 0, 0]];
-        let payload = self.checkerboard.payload;
-        self.checkerboard.notify_all();
+
+        self.checkerboard.update(|checkerboard| {
+            *checkerboard = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0], [2, 0, 0, 0]];
+        })
     }
 
     pub fn init(&mut self) {
-        self.checkerboard.payload = [[0; 4]; 4];
+        self.checkerboard.update(|checkerboard| {
+            *checkerboard = [[0; 4]; 4];
+        });
         let count = self.rand.get_rand_value(Some(2));
         for _ in 0..count {
             self.generate_one_cube();
         }
-        self.checkerboard.notify_all();
     }
 
     fn get_empty_position(checkerboard: [[u32; 4]; 4]) -> usize {

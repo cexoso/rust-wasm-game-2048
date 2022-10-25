@@ -30,6 +30,13 @@ where
             watch_list: Vec::new(),
         }
     }
+    pub fn update<F>(&mut self, updater: F)
+    where
+        F: Fn(&mut T) -> (),
+    {
+        updater(&mut self.payload);
+        self.notify_all();
+    }
     pub fn subscript(&mut self, f: js_sys::Function) -> usize {
         self.watch_list.push(f);
         self.watch_list.len()
