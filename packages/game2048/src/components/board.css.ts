@@ -2,9 +2,13 @@ import { style } from "@vanilla-extract/css";
 
 export const container = style({
   display: "flex",
+  flexDirection: "column",
 });
 
-export const row = style({});
+export const row = style({
+  flexDirection: "row",
+  display: "flex",
+});
 
 export const cube = style({
   background: "red",

@@ -17,6 +17,21 @@ impl Game {
             rand: RandUtil::new(),
         }
     }
+
+    pub fn down(&mut self) {
+        println!("debugger 🐛 self.checkerboard {:?}", self.checkerboard);
+        for i in 0..self.checkerboard.payload.len() {
+            let row = self.checkerboard.payload[i];
+            for j in 0..row.len() {
+                let value = row[j];
+                println!("debugger 🐛 value {:?}", value);
+            }
+        }
+        self.checkerboard.payload = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0], [2, 0, 0, 0]];
+        let payload = self.checkerboard.payload;
+        self.checkerboard.notify_all();
+    }
+
     pub fn init(&mut self) {
         self.checkerboard.payload = [[0; 4]; 4];
         let count = self.rand.get_rand_value(Some(2));
@@ -123,5 +138,15 @@ mod test {
         game.checkerboard.payload = [[1; 4]; 4];
         // 满了，不允许再新增
         assert_eq!(game.generate_one_cube(), false);
+    }
+    #[test]
+    fn down() {
+        let mut game = Game::new();
+        game.checkerboard.payload = [[0, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]];
+        game.down();
+        assert_eq!(
+            game.get_checkerboard_state(),
+            "[[0,0,0,0],[0,0,0,0],[1,0,0,0],[2,0,0,0]]"
+        );
     }
 }

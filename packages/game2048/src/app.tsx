@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import { Game } from "core-wasm";
 import { GameContext } from "./hooks/game";
 import { GameUI } from "./components/game-ui";
@@ -20,8 +20,27 @@ function useGame() {
   });
 }
 
+const useBindKeyBoard = (game: Game) => {
+  useEffect(() => {
+    const handleKeyPress = (event: KeyboardEvent) => {
+      const { key } = event;
+      if (key === "h") {
+      } else if (key === "j") {
+        game.down();
+      } else if (key === "k") {
+      } else if (key === "l") {
+      }
+    };
+    window.addEventListener("keypress", handleKeyPress);
+    return () => {
+      window.removeEventListener("keypress", handleKeyPress);
+    };
+  }, [game]);
+};
+
 export const GameApp = () => {
   const game = useGame();
+  useBindKeyBoard(game);
   return (
     <GameContext.Provider value={game}>
       <GameUI />
