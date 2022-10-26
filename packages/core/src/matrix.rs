@@ -26,15 +26,16 @@ impl Matrix {
             [matrix[3][3], matrix[2][3], matrix[1][3], matrix[0][3]],
         ];
     }
+
     /**
-     * 上下倒转(镜像)
+     * 左右倒转(镜像)
      */
-    pub fn reverse(matrix: &mut [[u32; 4]; 4]) {
+    pub fn horizontal_reverse(matrix: &mut [[u32; 4]; 4]) {
         *matrix = [
-            [matrix[3][0], matrix[3][1], matrix[3][2], matrix[3][3]],
-            [matrix[2][0], matrix[2][1], matrix[2][2], matrix[2][3]],
-            [matrix[1][0], matrix[1][1], matrix[1][2], matrix[1][3]],
-            [matrix[0][0], matrix[0][1], matrix[0][2], matrix[0][3]],
+            [matrix[0][3], matrix[0][2], matrix[0][1], matrix[0][0]],
+            [matrix[1][3], matrix[1][2], matrix[1][1], matrix[1][0]],
+            [matrix[2][3], matrix[2][2], matrix[2][1], matrix[2][0]],
+            [matrix[3][3], matrix[3][2], matrix[3][1], matrix[3][0]],
         ];
     }
 }
@@ -83,21 +84,21 @@ mod test {
     }
 
     #[test]
-    fn reverse() {
+    fn horizontal_reverse() {
         let mut matrix = [
             [1, 2, 3, 4],
             [5, 6, 7, 8],
             [9, 10, 11, 12],
             [13, 14, 15, 16],
         ];
-        Matrix::reverse(&mut matrix);
+        Matrix::horizontal_reverse(&mut matrix);
         assert_eq!(
             matrix,
             [
-                [13, 14, 15, 16],
-                [9, 10, 11, 12],
-                [5, 6, 7, 8],
-                [1, 2, 3, 4],
+                [4, 3, 2, 1],
+                [8, 7, 6, 5],
+                [12, 11, 10, 9],
+                [16, 15, 14, 13],
             ]
         );
     }
