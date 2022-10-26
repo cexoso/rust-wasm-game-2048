@@ -2,25 +2,28 @@ use serde::Serialize;
 use std::fmt;
 use wasm_bindgen::prelude::*;
 
-pub struct Observable<T> {
+type T = [[u32; 4]; 4];
+
+pub struct Observable {
     pub payload: T,
     watch_list: Vec<js_sys::Function>,
 }
 
-impl<T> fmt::Debug for Observable<T>
-where
-    T: std::fmt::Debug,
-{
+impl fmt::Debug for Observable {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        let x = self.payload;
         write!(
             f,
-            "payload: {:?}\nwatch_list: {:?}",
-            self.payload, self.watch_list
+            "\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}",
+            x[0][0], x[0][1], x[0][2], x[0][3],
+            x[1][0], x[1][1], x[1][2], x[1][3],
+            x[2][0], x[0][1], x[2][2], x[2][3],
+            x[3][0], x[3][1], x[3][2], x[3][3],
         )
     }
 }
 
-impl<T> Observable<T>
+impl Observable
 where
     T: Serialize,
 {
