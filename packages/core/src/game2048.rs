@@ -23,6 +23,11 @@ impl Game {
         self.right();
         Matrix::rotate_left(&mut self.checkerboard.payload);
     }
+    pub fn left(&mut self) {
+        Matrix::horizontal_reverse(&mut self.checkerboard.payload);
+        self.right();
+        Matrix::horizontal_reverse(&mut self.checkerboard.payload);
+    }
     pub fn right(&mut self) {
         let checkerboard = &mut self.checkerboard.payload;
         for row_index in 0..checkerboard.len() {
@@ -245,6 +250,17 @@ mod test {
         assert_eq!(
             game.get_checkerboard_state(),
             "[[2,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+        );
+    }
+
+    #[test]
+    fn left() {
+        let mut game = Game::new();
+        game.checkerboard.payload = [[0, 0, 0, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        game.left();
+        assert_eq!(
+            game.get_checkerboard_state(),
+            "[[0,0,0,0],[2,0,0,0],[0,0,0,0],[0,0,0,0]]"
         );
     }
 }
