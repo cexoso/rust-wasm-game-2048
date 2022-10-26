@@ -1,6 +1,7 @@
 use crate::observable::Observable;
 use crate::rand::RandUtil;
 use wasm_bindgen::prelude::*;
+// use super::matrix::Matrix;
 
 #[wasm_bindgen]
 pub struct Game {
@@ -18,18 +19,66 @@ impl Game {
         }
     }
 
-    pub fn down(&mut self) {
-        println!("debugger 🐛 self.checkerboard {:?}", self.checkerboard);
-        for i in 0..self.checkerboard.payload.len() {
-            let row = self.checkerboard.payload[i];
-            for j in 0..row.len() {
-                let value = row[j];
-                println!("debugger 🐛 value {:?}", value);
-            }
-        }
-
+    pub fn right(&mut self) {
         self.checkerboard.update(|checkerboard| {
-            *checkerboard = [[0, 0, 0, 0], [0, 0, 0, 0], [1, 0, 0, 0], [2, 0, 0, 0]];
+            for row_index in 0..checkerboard.len() {
+                let row_len = checkerboard[row_index].len();
+                let mut floor_value: i32 = -1;
+                let mut floor_zero: i32 = -1;
+                for col in 0..row_len {
+                    let col_index = row_len - col - 1;
+                    let col_index_i32 = col_index as i32;
+                    let value = checkerboard[row_index][col_index];
+                    // 当前遍历的是 0
+                    if value == 0 {
+                        // 更新 0 位置
+                        if floor_zero == -1 {
+                            floor_zero = col_index_i32;
+                        }
+                        continue;
+                    }
+
+                    // 非 0 情况下, 若不存在上一个值
+                    // 更新上一个值的位置
+                    if floor_value == -1 {
+                        // 尝试移动到上一个 0 值位置，并更新数据
+                        if floor_zero != -1 {
+                            checkerboard[row_index][floor_zero as usize] = value;
+                            checkerboard[row_index][col_index] = 0;
+                            // 移动到上一个 0 值位置
+                            // 0 值位置往前移一位(下一位必是 0 值)
+                            floor_value = floor_zero;
+                            floor_zero = floor_value - 1;
+                            continue;
+                        }
+                        floor_value = col_index_i32;
+                        continue;
+                    }
+                    // 否则尝试合并和移动
+                    let floor_value_usize = floor_value as usize;
+                    let x = checkerboard[row_index][floor_value_usize];
+                    // 值相同,合并
+                    if x == value {
+                        checkerboard[row_index][floor_value_usize] = 2 * value;
+                        checkerboard[row_index][col_index] = 0; // 删除原值
+                        if floor_zero == -1 {
+                            floor_zero = col_index_i32;
+                        }
+                        floor_value = -1;
+                        continue;
+                    }
+                    // 值不同,尝试移动到上一个 0 值位置
+                    if floor_zero != -1 {
+                        checkerboard[row_index][floor_zero as usize] = value;
+                        checkerboard[row_index][col_index] = 0;
+                        floor_zero = -1;
+                    }
+                    // 找不到 0 值位置可以移动
+                    // 这种情况下说明是一个值接着一个值
+                    // 所以更新有值块的位置信息
+                    floor_value = col_index_i32;
+                }
+            }
         })
     }
 
@@ -142,13 +191,46 @@ mod test {
         assert_eq!(game.generate_one_cube(), false);
     }
     #[test]
-    fn down() {
+    fn right_1() {
         let mut game = Game::new();
-        game.checkerboard.payload = [[0, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0], [1, 0, 0, 0]];
-        game.down();
+        game.checkerboard.payload = [[0, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        game.right();
         assert_eq!(
             game.get_checkerboard_state(),
-            "[[0,0,0,0],[0,0,0,0],[1,0,0,0],[2,0,0,0]]"
+            "[[0,0,1,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+        );
+    }
+
+    #[test]
+    fn right_2() {
+        let mut game = Game::new();
+        game.checkerboard.payload = [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        game.right();
+        assert_eq!(
+            game.get_checkerboard_state(),
+            "[[0,0,2,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+        );
+    }
+
+    #[test]
+    fn right_3() {
+        let mut game = Game::new();
+        game.checkerboard.payload = [[1, 0, 0, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        game.right();
+        assert_eq!(
+            game.get_checkerboard_state(),
+            "[[0,0,1,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+        );
+    }
+
+    #[test]
+    fn right_4() {
+        let mut game = Game::new();
+        game.checkerboard.payload = [[0, 0, 0, 0], [4, 2, 8, 8], [0, 0, 0, 0], [0, 0, 0, 0]];
+        game.right();
+        assert_eq!(
+            game.get_checkerboard_state(),
+            "[[0,0,0,0],[0,4,2,16],[0,0,0,0],[0,0,0,0]]"
         );
     }
 }

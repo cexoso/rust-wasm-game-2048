@@ -8,6 +8,7 @@ use wasm_bindgen::prelude::*;
 mod game2048;
 mod rand;
 mod observable;
+mod matrix;
 
 #[wasm_bindgen]
 extern "C" {
