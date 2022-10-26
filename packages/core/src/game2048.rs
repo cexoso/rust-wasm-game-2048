@@ -161,6 +161,7 @@ impl Game {
     }
 
     fn get_position_by_offset(checkerboard: [[u32; 4]; 4], mut offset: usize) -> (usize, usize) {
+        let origin_offset = offset;
         for i in 0..checkerboard.len() {
             let row = checkerboard[i];
             for j in 0..row.len() {
@@ -172,7 +173,8 @@ impl Game {
                 }
             }
         }
-        (0, 0)
+        println!("checkerboard: {:?}", checkerboard);
+        panic!("can't get position with offset: {}", origin_offset)
     }
 
     pub fn generate_one_cube(&mut self) -> bool {
@@ -180,7 +182,7 @@ impl Game {
         if remain_size > 0 {
             let (x, j) = Self::get_position_by_offset(
                 self.checkerboard.payload,
-                self.rand.get_rand_position(Some(remain_size)),
+                self.rand.get_rand_position(Some(remain_size - 1)),
             );
             let value = self.rand.get_rand_value(None);
             self.checkerboard.payload[x][j] = value;
