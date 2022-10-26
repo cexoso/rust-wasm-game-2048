@@ -18,6 +18,22 @@ impl Game {
             rand: RandUtil::new(),
         }
     }
+    pub fn up(&mut self) {
+        self.pure_up();
+        self.checkerboard.notify_all();
+    }
+    pub fn down(&mut self) {
+        self.pure_down();
+        self.checkerboard.notify_all();
+    }
+    pub fn left(&mut self) {
+        self.pure_left();
+        self.checkerboard.notify_all();
+    }
+    pub fn right(&mut self) {
+        self.pure_right();
+        self.checkerboard.notify_all();
+    }
     pub fn pure_up(&mut self) {
         Matrix::rotate_right(&mut self.checkerboard.payload);
         self.pure_right();
