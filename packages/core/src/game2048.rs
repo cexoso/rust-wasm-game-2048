@@ -195,10 +195,6 @@ impl Game {
         self.checkerboard.get_js_state()
     }
 
-    pub fn get_checkerboard_state(&self) -> String {
-        self.checkerboard.get_state()
-    }
-
     pub fn subscript_board(&mut self, f: js_sys::Function) -> usize {
         self.checkerboard.subscript(f)
     }
@@ -215,16 +211,16 @@ mod test {
     fn init() {
         let mut game = Game::new();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
         // 第一个值表示初始化时随机生成多少次
         game.rand.set_next_value(vec![2, 2, 4]);
         game.rand.set_next_position(vec![0, 0]);
         game.init();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[2,4,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[2, 4, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
     #[test]
@@ -234,8 +230,8 @@ mod test {
         game.rand.set_next_position(vec![0]);
         game.generate_one_cube();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[1,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
     #[test]
@@ -253,8 +249,8 @@ mod test {
         game.checkerboard.payload = [[0, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_right();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,1,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 1, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
 
@@ -264,8 +260,8 @@ mod test {
         game.checkerboard.payload = [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_right();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,2,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 2, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
 
@@ -275,8 +271,8 @@ mod test {
         game.checkerboard.payload = [[1, 0, 0, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_right();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,1,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 1, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
 
@@ -286,8 +282,8 @@ mod test {
         game.checkerboard.payload = [[0, 0, 0, 0], [4, 2, 8, 8], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_right();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,0,0],[0,4,2,16],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 0, 0], [0, 4, 2, 16], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
 
@@ -297,8 +293,8 @@ mod test {
         game.checkerboard.payload = [[1, 0, 0, 0], [1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_up();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[2,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[2, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
 
@@ -308,8 +304,8 @@ mod test {
         game.checkerboard.payload = [[0, 0, 0, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_left();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,0,0],[2,0,0,0],[0,0,0,0],[0,0,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 0, 0], [2, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]
         );
     }
     #[test]
@@ -318,8 +314,8 @@ mod test {
         game.checkerboard.payload = [[0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
         game.pure_down();
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,2,0,0]]"
+            game.checkerboard.payload,
+            [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0], [0, 2, 0, 0]]
         );
     }
 
@@ -333,8 +329,8 @@ mod test {
         // 只要能生成一个元素就算是成功
         assert_eq!(game.generate_cube(2), true);
         assert_eq!(
-            game.get_checkerboard_state(),
-            "[[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1]]"
+            game.checkerboard.payload,
+            [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]]
         );
     }
 }

@@ -1,4 +1,3 @@
-use serde::Serialize;
 use std::fmt;
 use wasm_bindgen::prelude::*;
 
@@ -15,18 +14,27 @@ impl fmt::Debug for Observable {
         write!(
             f,
             "\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}",
-            x[0][0], x[0][1], x[0][2], x[0][3],
-            x[1][0], x[1][1], x[1][2], x[1][3],
-            x[2][0], x[2][1], x[2][2], x[2][3],
-            x[3][0], x[3][1], x[3][2], x[3][3],
+            x[0][0],
+            x[0][1],
+            x[0][2],
+            x[0][3],
+            x[1][0],
+            x[1][1],
+            x[1][2],
+            x[1][3],
+            x[2][0],
+            x[2][1],
+            x[2][2],
+            x[2][3],
+            x[3][0],
+            x[3][1],
+            x[3][2],
+            x[3][3],
         )
     }
 }
 
-impl Observable
-where
-    T: Serialize,
-{
+impl Observable {
     pub fn new(payload: T) -> Self {
         Self {
             payload,
@@ -47,13 +55,6 @@ where
 
     pub fn get_js_state(&self) -> JsValue {
         serde_wasm_bindgen::to_value(&self.payload).unwrap()
-    }
-
-    pub fn get_state(&self) -> String {
-        match serde_json::to_string(&self.payload) {
-            Ok(str) => str,
-            Err(_) => String::from(""),
-        }
     }
 
     pub fn notify_all(&self) {
