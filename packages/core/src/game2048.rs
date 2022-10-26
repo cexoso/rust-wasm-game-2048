@@ -165,10 +165,10 @@ impl Game {
             let row = checkerboard[i];
             for j in 0..row.len() {
                 if row[j] == 0 {
+                    if offset == 0 {
+                        return (i, j);
+                    }
                     offset -= 1;
-                }
-                if offset == 0 {
-                    return (i, j);
                 }
             }
         }
@@ -218,7 +218,7 @@ mod test {
         );
         // 第一个值表示初始化时随机生成多少次
         game.rand.set_next_value(vec![2, 2, 4]);
-        game.rand.set_next_position(vec![1, 1]);
+        game.rand.set_next_position(vec![0, 0]);
         game.init();
         assert_eq!(
             game.get_checkerboard_state(),
@@ -229,7 +229,7 @@ mod test {
     fn generate_one_cube() {
         let mut game = Game::new();
         game.rand.set_next_value(vec![1]);
-        game.rand.set_next_position(vec![1]);
+        game.rand.set_next_position(vec![0]);
         game.generate_one_cube();
         assert_eq!(
             game.get_checkerboard_state(),
@@ -240,7 +240,7 @@ mod test {
     fn generate_one_full() {
         let mut game = Game::new();
         game.rand.set_next_value(vec![1]);
-        game.rand.set_next_position(vec![1]);
+        game.rand.set_next_position(vec![0]);
         game.checkerboard.payload = [[1; 4]; 4];
         // 满了，不允许再新增
         assert_eq!(game.generate_one_cube(), false);
@@ -325,7 +325,7 @@ mod test {
     fn generate_cube() {
         let mut game = Game::new();
         game.rand.set_next_value(vec![1]);
-        game.rand.set_next_position(vec![1]);
+        game.rand.set_next_position(vec![0]);
         game.checkerboard.payload = [[1; 4], [1; 4], [1; 4], [0, 1, 1, 1]];
 
         // 只要能生成一个元素就算是成功
