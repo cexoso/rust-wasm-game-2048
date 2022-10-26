@@ -7,6 +7,7 @@ use wasm_bindgen::prelude::*;
 pub struct Game {
     checkerboard: Observable,
     rand: RandUtil,
+    random_when_move: bool,
 }
 
 #[wasm_bindgen]
@@ -16,22 +17,31 @@ impl Game {
         Self {
             checkerboard: Observable::new([[0; 4]; 4]),
             rand: RandUtil::new(),
+            random_when_move: false,
         }
+    }
+
+    pub fn set_random_when_move(&mut self, next: bool) {
+        self.random_when_move = next;
     }
     pub fn up(&mut self) {
         self.pure_up();
+        self.generate_cube(2);
         self.checkerboard.notify_all();
     }
     pub fn down(&mut self) {
         self.pure_down();
+        self.generate_cube(2);
         self.checkerboard.notify_all();
     }
     pub fn left(&mut self) {
         self.pure_left();
+        self.generate_cube(2);
         self.checkerboard.notify_all();
     }
     pub fn right(&mut self) {
         self.pure_right();
+        self.generate_cube(2);
         self.checkerboard.notify_all();
     }
     pub fn pure_up(&mut self) {
@@ -44,6 +54,19 @@ impl Game {
         Matrix::rotate_left(&mut self.checkerboard.payload);
         self.pure_right();
         Matrix::rotate_right(&mut self.checkerboard.payload);
+    }
+
+    pub fn generate_cube(&mut self, max: u32) -> bool {
+        let mut result = false;
+        for _ in 0..max {
+            let success = self.generate_one_cube();
+            if success {
+                result = success;
+            } else {
+                return result;
+            }
+        }
+        result
     }
 
     pub fn pure_left(&mut self) {
@@ -114,6 +137,7 @@ impl Game {
     }
 
     pub fn init(&mut self) {
+        self.set_random_when_move(true);
         self.checkerboard.update(|checkerboard| {
             *checkerboard = [[0; 4]; 4];
         });
@@ -294,6 +318,21 @@ mod test {
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,2,0,0]]"
+        );
+    }
+
+    #[test]
+    fn generate_cube() {
+        let mut game = Game::new();
+        game.rand.set_next_value(vec![1]);
+        game.rand.set_next_position(vec![1]);
+        game.checkerboard.payload = [[1; 4], [1; 4], [1; 4], [0, 1, 1, 1]];
+
+        // 只要能生成一个元素就算是成功
+        assert_eq!(game.generate_cube(2), true);
+        assert_eq!(
+            game.get_checkerboard_state(),
+            "[[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1]]"
         );
     }
 }

@@ -25,10 +25,13 @@ const useBindKeyBoard = (game: Game) => {
     const handleKeyPress = (event: KeyboardEvent) => {
       const { key } = event;
       if (key === "h") {
+        game.left();
       } else if (key === "j") {
         game.down();
       } else if (key === "k") {
+        game.up();
       } else if (key === "l") {
+        game.right();
       }
     };
     window.addEventListener("keypress", handleKeyPress);
