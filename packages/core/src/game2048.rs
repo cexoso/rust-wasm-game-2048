@@ -18,24 +18,24 @@ impl Game {
             rand: RandUtil::new(),
         }
     }
-    pub fn up(&mut self) {
+    pub fn pure_up(&mut self) {
         Matrix::rotate_right(&mut self.checkerboard.payload);
-        self.right();
+        self.pure_right();
         Matrix::rotate_left(&mut self.checkerboard.payload);
     }
 
-    pub fn down(&mut self) {
+    pub fn pure_down(&mut self) {
         Matrix::rotate_left(&mut self.checkerboard.payload);
-        self.right();
+        self.pure_right();
         Matrix::rotate_right(&mut self.checkerboard.payload);
     }
 
-    pub fn left(&mut self) {
+    pub fn pure_left(&mut self) {
         Matrix::horizontal_reverse(&mut self.checkerboard.payload);
-        self.right();
+        self.pure_right();
         Matrix::horizontal_reverse(&mut self.checkerboard.payload);
     }
-    pub fn right(&mut self) {
+    pub fn pure_right(&mut self) {
         let checkerboard = &mut self.checkerboard.payload;
         for row_index in 0..checkerboard.len() {
             let row_len = checkerboard[row_index].len();
@@ -209,7 +209,7 @@ mod test {
     fn right_1() {
         let mut game = Game::new();
         game.checkerboard.payload = [[0, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.right();
+        game.pure_right();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,1,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
@@ -220,7 +220,7 @@ mod test {
     fn right_2() {
         let mut game = Game::new();
         game.checkerboard.payload = [[1, 1, 1, 1], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.right();
+        game.pure_right();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,2,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
@@ -231,7 +231,7 @@ mod test {
     fn right_3() {
         let mut game = Game::new();
         game.checkerboard.payload = [[1, 0, 0, 2], [0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.right();
+        game.pure_right();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,1,2],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
@@ -242,7 +242,7 @@ mod test {
     fn right_4() {
         let mut game = Game::new();
         game.checkerboard.payload = [[0, 0, 0, 0], [4, 2, 8, 8], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.right();
+        game.pure_right();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,0,0],[0,4,2,16],[0,0,0,0],[0,0,0,0]]"
@@ -253,7 +253,7 @@ mod test {
     fn up() {
         let mut game = Game::new();
         game.checkerboard.payload = [[1, 0, 0, 0], [1, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.up();
+        game.pure_up();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[2,0,0,0],[0,0,0,0],[0,0,0,0],[0,0,0,0]]"
@@ -264,7 +264,7 @@ mod test {
     fn left() {
         let mut game = Game::new();
         game.checkerboard.payload = [[0, 0, 0, 0], [1, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.left();
+        game.pure_left();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,0,0],[2,0,0,0],[0,0,0,0],[0,0,0,0]]"
@@ -274,7 +274,7 @@ mod test {
     fn down() {
         let mut game = Game::new();
         game.checkerboard.payload = [[0, 1, 0, 0], [0, 1, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
-        game.down();
+        game.pure_down();
         assert_eq!(
             game.get_checkerboard_state(),
             "[[0,0,0,0],[0,0,0,0],[0,0,0,0],[0,2,0,0]]"
