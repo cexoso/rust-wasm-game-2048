@@ -11,26 +11,12 @@ pub struct Observable {
 impl fmt::Debug for Observable {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let x = self.payload;
-        write!(
-            f,
-            "\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}",
-            x[0][0],
-            x[0][1],
-            x[0][2],
-            x[0][3],
-            x[1][0],
-            x[1][1],
-            x[1][2],
-            x[1][3],
-            x[2][0],
-            x[2][1],
-            x[2][2],
-            x[2][3],
-            x[3][0],
-            x[3][1],
-            x[3][2],
-            x[3][3],
-        )
+
+        let print_str = x.iter().map(|col_arr| {
+            col_arr.iter().map(|v| v.to_string()).collect::<Vec<String>>().join(",")
+        }).collect::<Vec<String>>().join("\n");
+
+        write!( f, "{}", print_str)
     }
 }
 
