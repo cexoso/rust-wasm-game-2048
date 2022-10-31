@@ -1,41 +1,27 @@
 use std::fmt;
 use wasm_bindgen::prelude::*;
 
-type T = [[u32; 4]; 4];
+type Matrix = [[u32; 4]; 4];
 
 pub struct Observable {
-    pub payload: T,
+    pub payload: Matrix,
     watch_list: Vec<js_sys::Function>,
 }
 
 impl fmt::Debug for Observable {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let x = self.payload;
-        write!(
-            f,
-            "\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}\n{},{},{},{}",
-            x[0][0],
-            x[0][1],
-            x[0][2],
-            x[0][3],
-            x[1][0],
-            x[1][1],
-            x[1][2],
-            x[1][3],
-            x[2][0],
-            x[2][1],
-            x[2][2],
-            x[2][3],
-            x[3][0],
-            x[3][1],
-            x[3][2],
-            x[3][3],
-        )
+
+        let print_str = x.iter().map(|col_arr| {
+            col_arr.iter().map(|v| v.to_string()).collect::<Vec<String>>().join(",")
+        }).collect::<Vec<String>>().join("\n");
+
+        write!( f, "{}", print_str)
     }
 }
 
 impl Observable {
-    pub fn new(payload: T) -> Self {
+    pub fn new(payload: Matrix) -> Self {
         Self {
             payload,
             watch_list: Vec::new(),
@@ -43,7 +29,7 @@ impl Observable {
     }
     pub fn update<F>(&mut self, updater: F)
     where
-        F: Fn(&mut T) -> (),
+        F: Fn(&mut Matrix),
     {
         updater(&mut self.payload);
         self.notify_all();
@@ -72,13 +58,12 @@ impl Observable {
 
     pub fn unsubscript(&mut self, f: js_sys::Function) -> bool {
         let watch_list = &self.watch_list;
-        for i in 0..watch_list.len() {
-            let spec_f = &watch_list[i];
-            if *spec_f == f {
+        for (i, v) in watch_list.iter().enumerate() {
+            if *v == f {
                 self.watch_list.remove(i);
                 return true;
             }
         }
-        return false;
+        false
     }
 }
