@@ -24,3 +24,8 @@
 在根目录下使用 `pnpm i` 安装依赖，在此之前，需要确保 `packages/core-wasm` 已经生成，pnpm 会使用链接的方式将 `packages/core-wasm` 安装到 `packages/game2048` 目录下。
 
 `packages/game2048` 目录就是前端的开发目录了，这个项目没有使用前端框架。
+
+
+#demo page 
+
+https://cexoso.github.io/rust-wasm-game-2048/index.html
