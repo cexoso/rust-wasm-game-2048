@@ -5,4 +5,5 @@ import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 
 export default defineConfig({
   plugins: [wasm(), vanillaExtractPlugin(), topLevelAwait()],
+  base: "rust-wasm-game-2048",
 });
